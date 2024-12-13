@@ -61,6 +61,11 @@
                             <x-file-input id="cover" name="cover" class="mt-1 block w-full" />
                             <x-input-error class="mt-2" :messages="$errors->get('cover')" />
                         </div>
+                        <div class="max-w-xl">
+                            <x-input-label for="content_pdf" value="Isi Buku (PDF)" />
+                            <x-file-input id="content_pdf" name="content_pdf" class="mt-1 block w-full" accept=".pdf" />
+                            <x-input-error class="mt-2" :messages="$errors->get('content_pdf')" />
+                        </div>
                         <x-secondary-button tag="a" href="{{ route('book') }}">Cancel</x-secondary-button>
                         <x-primary-button name="save_and_create" value="true">Save & Create Another</x-primary-button>
                         <x-primary-button name="save" value="true">Save</x-primary-button>

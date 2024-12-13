@@ -63,6 +63,11 @@
                             <x-input-error class="mt-2" :messages="$errors->get('cover')" />
                             <x-text-input type="hidden" name="old_cover"value="{{ $book->cover }}" />
                         </div>
+                        <div class="max-w-xl">
+                            <x-input-label for="content_pdf" value="Isi Buku (PDF)" />
+                            <x-file-input id="content_pdf" name="content_pdf" class="mt-1 block w-full" accept=".pdf" />
+                            <x-input-error class="mt-2" :messages="$errors->get('content_pdf')" />
+                        </div>
                         <x-secondary-button tag="a" href="{{ route('book') }}">Cancel</x-secondary-button>
                         <x-primary-button value="true">Update</x-primary-button>
                     </form>

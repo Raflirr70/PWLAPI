@@ -35,6 +35,8 @@ class BookController extends Controller
             'city' => 'required|max:75',
             'bookshelf_id' => 'required',
             'cover' => 'nullable|image',
+            'content_pdf' => 'nullable|mimes:pdf|max:10240'
+
         ]);
 
         if ($request->hasFile('cover')) {
@@ -45,7 +47,18 @@ class BookController extends Controller
             $validated['cover'] = basename($path);
         }
 
+        $fileName = time() . '_' . $request->file('content_pdf')->getClientOriginalName();
+        $path = $request->file('content_pdf')->storeAs(
+            'public/pdf_books',
+            $fileName
+        );
+        $validated['content_pdf'] = basename($path);
+
+
+        // Simpan buku ke database
         Book::create($validated);
+        // dd(Book::latest()->first());
+        // dd($validated);
 
         $notification = array(
             'message' => 'Data buku berhasil ditambahkan',
@@ -58,6 +71,7 @@ class BookController extends Controller
             return redirect()->route('book.create')->with($notification);
         }
     }
+
 
     public function edit(string $id)
     {
@@ -78,11 +92,14 @@ class BookController extends Controller
             'city' => 'required|max:75',
             'bookshelf_id' => 'required',
             'cover' => 'nullable|image',
+            'content_pdf' => 'nullable|mimes:pdf|max:10240'
+
         ]);
 
         if ($request->hasFile('cover')) {
+            // Hapus cover lama jika ada
             if ($book->cover != null) {
-                Storage::delete('public/cover_buku/' . $request->old_cover);
+                Storage::delete('public/cover_buku/' . $book->cover);
             }
             $path = $request->file('cover')->storeAs(
                 'public/cover_buku',
@@ -91,6 +108,16 @@ class BookController extends Controller
             $validated['cover'] = basename($path);
         }
 
+        $fileName = time() . '_' . $request->file('content_pdf')->getClientOriginalName();
+        $path = $request->file('content_pdf')->storeAs(
+            'public/pdf_books',
+            $fileName
+        );
+        $validated['content_pdf'] = basename($path);
+
+        
+
+        // Update buku ke database
         Book::where('id', $id)->update($validated);
 
         $notification = array(
@@ -99,6 +126,7 @@ class BookController extends Controller
         );
 
         return redirect()->route('book')->with($notification);
+
     }
 
     public function destroy(string $id)
@@ -112,7 +140,6 @@ class BookController extends Controller
             'message' => 'Data buku berhasil dihapus',
             'alert-type' => 'success'
         );
-
         return redirect()->route('book')->with($notification);
     }
 

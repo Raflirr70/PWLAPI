@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("publisher");
             $table->string("city");
             $table->string("cover")->nullable();
+            $table->string('content_pdf')->nullable();
             $table->unsignedBigInteger("bookshelf_id");
             $table->timestamps();
 

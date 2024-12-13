@@ -16,11 +16,6 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    {{-- @hasrole('mahasiswa')
-                        <x-nav-link :href="route('book')" :active="request()->routeIs('book')">
-                            {{ __('List Buku') }}
-                        </x-nav-link>
-                    @endhasrole --}}
 
                     {{-- @hasrole('pustakawan')
                         <x-nav-link :href="route('book')" :active="request()->routeIs('book') || request()->routeIs('book.create')">

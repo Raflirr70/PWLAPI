@@ -18,6 +18,7 @@ class Book extends Model
         'city',
         'bookshelf_id',
         'cover',
+        'content_pdf'
     ];
 
     public function bookshelf(): BelongsTo
